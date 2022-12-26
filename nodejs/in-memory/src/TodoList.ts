@@ -32,4 +32,8 @@ export class TodoList {
     }
     this.todos[updatedTodoIndex] = updatedTodo;
   };
+
+  delete = (id: string) => {
+    this.todos = this.todos.filter((todo) => todo.id !== id);
+  };
 }
