@@ -3,7 +3,7 @@ import { Todo } from "./Todo";
 
 const todoList = new TodoList();
 
-const todo = new Todo("My first todo", "123");
+const todo = new Todo("My first todo");
 
 todoList.add(todo);
 
