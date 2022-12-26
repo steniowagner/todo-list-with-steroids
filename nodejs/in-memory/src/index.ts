@@ -8,3 +8,6 @@ const todo = new Todo("My first todo", "123");
 todoList.add(todo);
 
 todoList.readAll();
+
+const todoSearched = todoList.readById(todo.id);
+console.log(todoSearched);

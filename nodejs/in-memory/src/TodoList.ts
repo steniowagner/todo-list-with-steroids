@@ -20,4 +20,6 @@ export class TodoList {
       )
     );
   };
+
+  readById = (id: string) => this.todos.find((todo) => todo.id === id);
 }
