@@ -44,7 +44,11 @@ export class TodoList {
   delete = (id: string) => {
     const todo = this.todos.find((todo) => todo.id === id);
     if (!todo) {
-      return undefined;
+      throw new TodoListError({
+        name: "UPDATING_NON_EXISTENT_TODO",
+        message: "Not possible to delete a non-existent todo.",
+        cause: undefined,
+      });
     }
     this.todos = this.todos.filter((todo) => todo.id !== id);
   };

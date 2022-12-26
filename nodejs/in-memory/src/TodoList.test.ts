@@ -1,6 +1,6 @@
+import { TodoListError } from "./TodoList.errors";
 import { TodoList } from "./TodoList";
 import { Todo } from "./Todo";
-import { TodoListError } from "./TodoList.errors";
 
 const generateRandomNumber = (max: number = 10, min: number = 1) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -99,8 +99,15 @@ describe("TodoList", () => {
   describe("Deleting a todo", () => {
     it(`should return "undefined" if the todo doesn't exist"`, () => {
       const sut = new TodoList();
-      const deletedTodo = sut.delete("SOME_ID_THAT_DOESNT_EXIST");
-      expect(deletedTodo).toBeUndefined();
+      expect(() => {
+        sut.delete("DELETING_NON_EXISTENT_TODO");
+      }).toThrow(
+        new TodoListError({
+          name: "UPDATING_NON_EXISTENT_TODO",
+          message: "Not possible to delete a non-existent todo.",
+          cause: undefined,
+        })
+      );
     });
 
     it("should remove the todo correctly", () => {
