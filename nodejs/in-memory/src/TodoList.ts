@@ -1,4 +1,5 @@
 import { Todo } from "./Todo";
+import { TodoListError } from "./TodoList.errors";
 
 export class TodoList {
   public todos: Todo[];
@@ -12,7 +13,12 @@ export class TodoList {
       (todo) => todo.description === newTodo.description
     );
     if (isTodoAlredayExists) {
-      return;
+      throw new TodoListError({
+        name: "TODO_ALREADY_EXISTS",
+        message:
+          "This todo already exist. Please choose another title for this new todo.",
+        cause: undefined,
+      });
     }
     this.todos.push(newTodo);
   };

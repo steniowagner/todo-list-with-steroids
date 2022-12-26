@@ -1,20 +1,26 @@
 import { TodoList } from "./TodoList";
 import { Todo } from "./Todo";
+import { TodoListError } from "./TodoList.errors";
 
 const generateRandomNumber = (max: number = 10, min: number = 1) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 describe("TodoList", () => {
   describe("Creating a todo", () => {
-    it(`should not allow to create a todo with the "description"`, () => {
+    it(`should throw the TodoAlreadyExists error when try to add an already existent todo`, () => {
       const sut = new TodoList();
       const newTodo = new Todo("My first todo");
       sut.add(newTodo);
-      sut.add(newTodo);
-      const todosWithSameDescription = sut.todos.filter(
-        (todo) => todo.description === newTodo.description
+      expect(() => {
+        sut.add(newTodo);
+      }).toThrow(
+        new TodoListError({
+          name: "TODO_ALREADY_EXISTS",
+          message:
+            "This todo already exist. Please choose another title for this new todo.",
+          cause: undefined,
+        })
       );
-      expect(todosWithSameDescription.length).toEqual(1);
     });
 
     it("should add a new todo-item into the list correctly", () => {
