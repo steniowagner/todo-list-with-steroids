@@ -1,7 +1,7 @@
 export class Todo {
-  private description: string;
-  private isFinished: boolean;
-  private id: string;
+  public description: string;
+  public isFinished: boolean;
+  public id: string;
 
   constructor(description: string, id: string) {
     this.description = description;

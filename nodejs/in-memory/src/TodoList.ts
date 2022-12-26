@@ -6,4 +6,8 @@ export class TodoList {
   constructor() {
     this.todos = [];
   }
+
+  add = (todo: Todo) => {
+    this.todos.push(todo);
+  };
 }
