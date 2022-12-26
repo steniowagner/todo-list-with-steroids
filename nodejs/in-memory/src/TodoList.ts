@@ -1,7 +1,7 @@
 import { Todo } from "./Todo";
 
 export class TodoList {
-  private todos: Todo[];
+  public todos: Todo[];
 
   constructor() {
     this.todos = [];
@@ -26,6 +26,10 @@ export class TodoList {
   };
 
   delete = (id: string) => {
+    const todo = this.todos.find((todo) => todo.id === id);
+    if (!todo) {
+      return undefined;
+    }
     this.todos = this.todos.filter((todo) => todo.id !== id);
   };
 }
