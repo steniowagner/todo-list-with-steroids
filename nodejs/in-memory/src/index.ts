@@ -7,7 +7,10 @@ const todo = new Todo("My first todo", "123");
 
 todoList.add(todo);
 
-todoList.readAll();
+console.log(todoList.readById(todo.id));
 
-const todoSearched = todoList.readById(todo.id);
-console.log(todoSearched);
+todo.finish();
+
+todoList.update(todo);
+
+console.log(todoList.readById(todo.id));

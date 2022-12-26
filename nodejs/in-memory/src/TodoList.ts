@@ -22,4 +22,14 @@ export class TodoList {
   };
 
   readById = (id: string) => this.todos.find((todo) => todo.id === id);
+
+  update = (updatedTodo: Todo) => {
+    const updatedTodoIndex = this.todos.findIndex(
+      (todo) => todo.id === updatedTodo.id
+    );
+    if (!updatedTodoIndex) {
+      return;
+    }
+    this.todos[updatedTodoIndex] = updatedTodo;
+  };
 }
