@@ -7,8 +7,14 @@ export class TodoList {
     this.todos = [];
   }
 
-  add = (todo: Todo) => {
-    this.todos.push(todo);
+  add = (newTodo: Todo) => {
+    const isTodoAlredayExists = this.todos.find(
+      (todo) => todo.description === newTodo.description
+    );
+    if (isTodoAlredayExists) {
+      return;
+    }
+    this.todos.push(newTodo);
   };
 
   readAll = () => this.todos;
