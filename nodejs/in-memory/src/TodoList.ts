@@ -11,15 +11,7 @@ export class TodoList {
     this.todos.push(todo);
   };
 
-  readAll = () => {
-    this.todos.map((todo, index) =>
-      console.log(
-        `${index + 1} - Description: ${todo.description} - Finished: ${
-          todo.isFinished ? "Yes" : "No"
-        }`
-      )
-    );
-  };
+  readAll = () => this.todos;
 
   readById = (id: string) => this.todos.find((todo) => todo.id === id);
 
