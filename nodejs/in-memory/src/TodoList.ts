@@ -10,4 +10,14 @@ export class TodoList {
   add = (todo: Todo) => {
     this.todos.push(todo);
   };
+
+  readAll = () => {
+    this.todos.map((todo, index) =>
+      console.log(
+        `${index + 1} - Description: ${todo.description} - Finished: ${
+          todo.isFinished ? "Yes" : "No"
+        }`
+      )
+    );
+  };
 }

@@ -6,3 +6,5 @@ const todoList = new TodoList();
 const todo = new Todo("My first todo", "123");
 
 todoList.add(todo);
+
+todoList.readAll();
