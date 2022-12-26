@@ -71,10 +71,18 @@ describe("TodoList", () => {
   });
 
   describe("Updating a todo", () => {
-    it(`should return "undefined" when the target todo doesnt exist`, () => {
+    it(`should throw the UpdateUnexistentTodo error when try to update a todo that doesn't exist`, () => {
       const sut = new TodoList();
-      const todo = sut.readById("SOME_ID_THAT_DOESNT_EXIST");
-      expect(todo).toBeUndefined();
+      const todo = new Todo("My first todo");
+      expect(() => {
+        sut.update(todo);
+      }).toThrow(
+        new TodoListError({
+          name: "UPDATING_NON_EXISTENT_TODO",
+          message: "Not possible to update a non-existent todo.",
+          cause: undefined,
+        })
+      );
     });
 
     it("should update a todo correctly when the todo exists", () => {

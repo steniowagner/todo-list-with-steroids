@@ -31,8 +31,12 @@ export class TodoList {
     const updatedTodoIndex = this.todos.findIndex(
       (todo) => todo.id === updatedTodo.id
     );
-    if (!updatedTodoIndex) {
-      return;
+    if (updatedTodoIndex < 0) {
+      throw new TodoListError({
+        name: "UPDATING_NON_EXISTENT_TODO",
+        message: "Not possible to update a non-existent todo.",
+        cause: undefined,
+      });
     }
     this.todos[updatedTodoIndex] = updatedTodo;
   };
