@@ -1,12 +1,12 @@
-export const EXIT_OPTION = "6";
+export const EXIT_OPTION = "7";
 
 export class TodoMenuView {
   static main = () => `1 -- Create todo
 2 -- Read all todos
 3 -- Read one todo (by id)
 4 -- Update a todo description
-4 -- Mark a todo as "completed"
-5 -- Remove a todo
+5 -- Mark a todo as "completed"
+6 -- Remove a todo
 ${EXIT_OPTION} -- Exit
 `;
 
