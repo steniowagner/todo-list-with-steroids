@@ -44,19 +44,20 @@ export class TodoListMenuController {
     console.log(`\n${todo}\n`);
   };
 
-  private handleUpdateTodo = async () => {
+  private handleUpdateTodoDescription = async () => {
     try {
       const id = await this.reader.read(TodoMenuView.update());
-      const description = (await this.reader.read(
+      const description = await this.reader.read(
         TodoMenuView.updateDescription()
-      )) as string;
+      );
       this.todoListController.update({
-        id: id as string,
         description: description as string,
+        id: id as string,
       });
-      console.log("\nTodo updated successfully\n");
+      console.log("\nTodo description updated successfully\n");
     } catch (err) {
-      console.log(err);
+      console.log("\nError when tried to update the todo description");
+      console.log(`Reason: ${(err as Error).message}\n`);
     }
   };
 
@@ -70,7 +71,7 @@ export class TodoListMenuController {
       case "3":
         return this.handleReadTodoById();
       case "4":
-        return this.handleUpdateTodo();
+        return this.handleUpdateTodoDescription();
       default:
         return;
     }

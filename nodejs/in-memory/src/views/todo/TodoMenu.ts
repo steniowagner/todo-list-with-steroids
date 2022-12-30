@@ -14,7 +14,7 @@ ${EXIT_OPTION} -- Exit
 
   static readById = () => `[Reading Todo by id]\n\nWhat's the Todo id?\n`;
 
-  static update = () => `[Update a Todo by id]\n\nWhat's the Todo id?\n`;
+  static update = () => `[Update a Todo description]\n\nWhat's the Todo id?\n`;
 
   static updateDescription = () => `\nType the new description\n`;
 }
