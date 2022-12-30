@@ -11,6 +11,11 @@ export class Todo {
     this.id = uuid();
   }
 
+  get value(): string {
+    const isFinished = this.isFinished ? "Yes" : "No";
+    return `id: ${this.id} - ${this.description} - Finished? ${isFinished}`;
+  }
+
   finish = () => {
     this.isFinished = true;
   };
