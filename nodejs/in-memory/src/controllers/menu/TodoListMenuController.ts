@@ -75,6 +75,17 @@ export class TodoListMenuController {
     }
   };
 
+  private handleDeleteTodo = async () => {
+    try {
+      const id = await this.reader.read(TodoMenuView.update());
+      this.todoListController.delete(id as string);
+      console.log("\nTodo successfully removed\n");
+    } catch (err) {
+      console.log("\nError when tried remove the Todo");
+      console.log(`Reason: ${(err as Error).message}\n`);
+    }
+  };
+
   private handleMenuOption = async (option: string) => {
     console.clear();
     switch (option) {
@@ -88,6 +99,8 @@ export class TodoListMenuController {
         return this.handleUpdateTodoDescription();
       case "5":
         return this.handleMarkTodoAsCompleted();
+      case "6":
+        return this.handleDeleteTodo();
       default:
         return;
     }

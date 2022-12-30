@@ -17,4 +17,6 @@ ${EXIT_OPTION} -- Exit
   static update = () => `[Update a Todo description]\n\nWhat's the Todo id?\n`;
 
   static updateDescription = () => `\nType the new description\n`;
+
+  static delete = () => `[Remove a Todo]\n\nWhat's the Todo id?\n`;
 }
