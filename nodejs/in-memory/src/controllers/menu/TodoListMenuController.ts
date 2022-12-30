@@ -61,6 +61,20 @@ export class TodoListMenuController {
     }
   };
 
+  private handleMarkTodoAsCompleted = async () => {
+    try {
+      const id = await this.reader.read(TodoMenuView.update());
+      this.todoListController.update({
+        isFinished: true,
+        id: id as string,
+      });
+      console.log("\nTodo successfully completed\n");
+    } catch (err) {
+      console.log("\nError when tried complete the Todo");
+      console.log(`Reason: ${(err as Error).message}\n`);
+    }
+  };
+
   private handleMenuOption = async (option: string) => {
     console.clear();
     switch (option) {
@@ -72,6 +86,8 @@ export class TodoListMenuController {
         return this.handleReadTodoById();
       case "4":
         return this.handleUpdateTodoDescription();
+      case "5":
+        return this.handleMarkTodoAsCompleted();
       default:
         return;
     }
