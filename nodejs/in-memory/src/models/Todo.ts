@@ -1,22 +1,36 @@
 import { v4 as uuid } from "uuid";
 
 export class Todo {
-  public description: string;
-  public isFinished: boolean;
-  public id: string;
+  private readonly _id: string;
+  private _isFinished: boolean;
 
-  constructor(description: string) {
-    this.description = description;
-    this.isFinished = false;
-    this.id = uuid();
+  constructor(private _description: string) {
+    this._isFinished = false;
+    this._id = uuid();
   }
 
-  get value(): string {
-    const isFinished = this.isFinished ? "Yes" : "No";
-    return `id: ${this.id} - ${this.description} - Finished? ${isFinished}`;
+  get id() {
+    return this._id;
   }
 
-  finish = () => {
-    this.isFinished = true;
-  };
+  get isFinished() {
+    return this._isFinished;
+  }
+
+  set isFinished(isFinished: boolean) {
+    this._isFinished = isFinished;
+  }
+
+  get description() {
+    return this._description;
+  }
+
+  set description(description: string) {
+    this._description = description;
+  }
+
+  toString() {
+    const isFinished = this._isFinished ? "Yes" : "No";
+    return `id: ${this._id} - ${this._description} - Finished? ${isFinished}`;
+  }
 }
