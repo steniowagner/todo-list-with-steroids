@@ -14,8 +14,9 @@ export class TodoListController {
       .readAll()
       .find((todo) => todo.description === targetTodo.description);
 
-  create = (newTodo: Todo) => {
-    const isTodoAlredayExists = this.checkTodoAlreadyExists(newTodo);
+  create = (description: string) => {
+    const todo = new Todo(description);
+    const isTodoAlredayExists = this.checkTodoAlreadyExists(todo);
     if (isTodoAlredayExists) {
       throw new TodoListError({
         name: "TODO_ALREADY_EXISTS",
@@ -24,7 +25,8 @@ export class TodoListController {
         cause: undefined,
       });
     }
-    this.todoList.add(newTodo);
+    this.todoList.add(todo);
+    return todo;
   };
 
   readAll = () => this.todoList.readAll();

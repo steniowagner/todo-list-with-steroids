@@ -9,10 +9,9 @@ describe("TodoListController", () => {
   describe("Creating a todo", () => {
     it(`should throw the TodoAlreadyExists error when try to add an already existent todo`, () => {
       const sut = new TodoListController();
-      const newTodo = new Todo("My first todo");
-      sut.create(newTodo);
+      sut.create("My first todo");
       expect(() => {
-        sut.create(newTodo);
+        sut.create("My first todo");
       }).toThrow(
         new TodoListError({
           name: "TODO_ALREADY_EXISTS",
@@ -25,8 +24,7 @@ describe("TodoListController", () => {
 
     it("should add a new todo-item into the list correctly", () => {
       const sut = new TodoListController();
-      const todo = new Todo("My first todo");
-      sut.create(todo);
+      const todo = sut.create("My first todo");
       const allTodos = sut.readAll();
       expect(allTodos).toContain(todo);
     });
@@ -44,7 +42,7 @@ describe("TodoListController", () => {
         const numberOfTodos = generateRandomNumber();
         const sut = new TodoListController();
         for (let i = 0; i < numberOfTodos; i++) {
-          sut.create(new Todo(`${i + 1} Todo`));
+          sut.create(`${i + 1} Todo`);
         }
         expect(sut.readAll().length).toEqual(numberOfTodos);
         const allTodos = sut.readAll();
@@ -62,9 +60,8 @@ describe("TodoListController", () => {
       });
 
       it("should read a todo by id correctly", () => {
-        const todo = new Todo("My first todo");
         const sut = new TodoListController();
-        sut.create(todo);
+        const todo = sut.create("My first todo");
         const todoFromList = sut.readById(todo.id);
         expect(todoFromList).toEqual(todo);
       });
@@ -88,8 +85,7 @@ describe("TodoListController", () => {
 
     it("should update a todo correctly when the todo exists", () => {
       const sut = new TodoListController();
-      const todo = new Todo("My first todo");
-      sut.create(todo);
+      const todo = sut.create("My first todo");
       todo.description = "My first todo updated";
       todo.finish();
       sut.update(todo);
@@ -114,8 +110,7 @@ describe("TodoListController", () => {
 
     it("should remove the todo correctly", () => {
       const sut = new TodoListController();
-      const todo = new Todo("My first todo");
-      sut.create(todo);
+      const todo = sut.create("My first todo");
       expect(sut.readAll()).toContain(todo);
       sut.delete(todo.id);
       expect(sut.readAll()).not.toContain(todo);
