@@ -1,13 +1,13 @@
-import { TodoMenuController } from "./TodoMenuController";
+import { TodoListMenuController } from "./TodoListMenuController";
 
 export class MenuController {
-  private todoMenuController: TodoMenuController;
+  private todoListMenuController: TodoListMenuController;
 
   constructor() {
-    this.todoMenuController = new TodoMenuController();
+    this.todoListMenuController = new TodoListMenuController();
   }
 
   public start = async () => {
-    this.todoMenuController.display();
+    this.todoListMenuController.display();
   };
 }

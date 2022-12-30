@@ -10,4 +10,6 @@ export class TodoMenuView {
 5 -- Remove a todo
 ${EXIT_OPTION} -- Exit
 `;
+
+  static create = () => `What would you like to do?\n`;
 }
