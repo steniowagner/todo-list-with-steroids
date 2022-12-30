@@ -12,10 +12,10 @@ export class TodoListMenuController {
   }
 
   public display = async () => {
-    let option: unknown;
+    let option: string = "";
     console.clear();
     while (option !== EXIT_OPTION) {
-      option = await this.reader.read(TodoMenuView.main());
+      option = (await this.reader.read(TodoMenuView.main())) as string;
       await this.handleMenuOption(option as string);
     }
     process.exit(0);
