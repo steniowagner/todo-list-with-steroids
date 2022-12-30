@@ -1,6 +1,6 @@
-import { TodoListError } from "../models/todo-list/TodoList.errors";
+import { TodoListError } from "../../models/todo-list/TodoList.errors";
 import { TodoListController } from "./TodoListController";
-import { Todo } from "../models/Todo";
+import { Todo } from "../../models/Todo";
 
 const generateRandomNumber = (max: number = 10, min: number = 1) =>
   Math.floor(Math.random() * (max - min + 1)) + min;

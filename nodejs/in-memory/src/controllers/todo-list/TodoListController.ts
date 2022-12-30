@@ -1,6 +1,6 @@
-import { TodoListModel } from "../models/todo-list/TodoListModel";
-import { TodoListError } from "../models/todo-list/TodoList.errors";
-import { Todo } from "../models/Todo";
+import { TodoListModel } from "../../models/todo-list/TodoListModel";
+import { TodoListError } from "../../models/todo-list/TodoList.errors";
+import { Todo } from "../../models/Todo";
 
 export class TodoListController {
   private todoList: TodoListModel;
