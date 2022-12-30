@@ -28,11 +28,21 @@ export class TodoListMenuController {
     console.log(todo.value);
   };
 
+  private handleReadAllTodos = () => {
+    console.log("\nTodos: ");
+    const allTodos = this.todoListController.readAll();
+    allTodos.forEach((todo, index) =>
+      console.log(`${index + 1} - ${todo.value}`)
+    );
+  };
+
   private handleMenuOption = async (option: string) => {
     console.clear();
     switch (option) {
       case "1":
         return this.handleCreateTodo();
+      case "2":
+        return this.handleReadAllTodos();
       default:
         return;
     }
