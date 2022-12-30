@@ -25,15 +25,13 @@ export class TodoListMenuController {
     const description = await this.reader.read(TodoMenuView.create());
     const todo = this.todoListController.create(description as string);
     console.log("\nTodo created successfully\n");
-    console.log(`${todo.value}\n`);
+    console.log(`${todo}\n`);
   };
 
   private handleReadAllTodos = () => {
     console.log("[All todos]\n");
     const allTodos = this.todoListController.readAll();
-    allTodos.forEach((todo, index) =>
-      console.log(`${index + 1} - ${todo.value}`)
-    );
+    allTodos.forEach((todo, index) => console.log(`${index + 1} - ${todo}`));
     console.log("");
   };
 
@@ -43,7 +41,23 @@ export class TodoListMenuController {
     if (!todo) {
       return console.log("\nTodo not found\n");
     }
-    console.log(`\n${todo.value}\n`);
+    console.log(`\n${todo}\n`);
+  };
+
+  private handleUpdateTodo = async () => {
+    try {
+      const id = await this.reader.read(TodoMenuView.update());
+      const description = (await this.reader.read(
+        TodoMenuView.updateDescription()
+      )) as string;
+      this.todoListController.update({
+        id: id as string,
+        description: description as string,
+      });
+      console.log("\nTodo updated successfully\n");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   private handleMenuOption = async (option: string) => {
@@ -55,6 +69,8 @@ export class TodoListMenuController {
         return this.handleReadAllTodos();
       case "3":
         return this.handleReadTodoById();
+      case "4":
+        return this.handleUpdateTodo();
       default:
         return;
     }

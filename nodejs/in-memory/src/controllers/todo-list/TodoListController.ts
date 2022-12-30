@@ -2,6 +2,11 @@ import { TodoListModel } from "../../models/todo-list/TodoListModel";
 import { TodoListError } from "../../models/todo-list/TodoList.errors";
 import { Todo } from "../../models/Todo";
 
+type UpdateTodoParams = {
+  id: string;
+  isFinished?: boolean;
+  description?: string;
+};
 export class TodoListController {
   private todoList: TodoListModel;
 
@@ -9,14 +14,12 @@ export class TodoListController {
     this.todoList = new TodoListModel();
   }
 
-  checkTodoAlreadyExists = (targetTodo: Todo) =>
-    this.todoList
-      .readAll()
-      .find((todo) => todo.description === targetTodo.description);
+  checkTodoAlreadyExists = (description: string) =>
+    this.todoList.readAll().find((todo) => todo.description === description);
 
   create = (description: string) => {
     const todo = new Todo(description);
-    const isTodoAlredayExists = this.checkTodoAlreadyExists(todo);
+    const isTodoAlredayExists = this.checkTodoAlreadyExists(todo.description);
     if (isTodoAlredayExists) {
       throw new TodoListError({
         name: "TODO_ALREADY_EXISTS",
@@ -33,16 +36,37 @@ export class TodoListController {
 
   readById = (id: string) => this.todoList.readById(id);
 
-  update = (todo: Todo) => {
-    const isTodoAlredayExists = this.checkTodoAlreadyExists(todo);
-    if (!isTodoAlredayExists) {
+  private readExistentTodoById = (id: string) => {
+    const todo = this.todoList.readById(id);
+    if (!todo) {
       throw new TodoListError({
         name: "UPDATING_NON_EXISTENT_TODO",
         message: "Not possible to update a non-existent todo.",
         cause: undefined,
       });
     }
-    this.todoList.update(todo);
+    return todo;
+  };
+
+  private checkUpdatingToExistentDescription = (description: string) => {
+    const isTodoAlredayExists = this.checkTodoAlreadyExists(description);
+    if (isTodoAlredayExists) {
+      throw new TodoListError({
+        name: "TODO_DESCRIPTION_ALREADY_EXISTS",
+        message: `This todo is alredy created.`,
+        cause: undefined,
+      });
+    }
+  };
+
+  update = (params: UpdateTodoParams) => {
+    const todo = this.readExistentTodoById(params.id);
+    if (params.description) {
+      this.checkUpdatingToExistentDescription(params.description);
+    }
+    todo.description = params.description || todo.description;
+    todo.isFinished = params.isFinished || todo.isFinished;
+    return this.todoList.update(todo);
   };
 
   delete = (id: string) => {
