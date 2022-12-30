@@ -24,16 +24,26 @@ export class TodoListMenuController {
   private handleCreateTodo = async () => {
     const description = await this.reader.read(TodoMenuView.create());
     const todo = this.todoListController.create(description as string);
-    console.log("\nTodo created successfully");
-    console.log(todo.value);
+    console.log("\nTodo created successfully\n");
+    console.log(`${todo.value}\n`);
   };
 
   private handleReadAllTodos = () => {
-    console.log("\nTodos: ");
+    console.log("[All todos]\n");
     const allTodos = this.todoListController.readAll();
     allTodos.forEach((todo, index) =>
       console.log(`${index + 1} - ${todo.value}`)
     );
+    console.log("");
+  };
+
+  private handleReadTodoById = async () => {
+    const id = await this.reader.read(TodoMenuView.readById());
+    const todo = this.todoListController.readById(id as string);
+    if (!todo) {
+      return console.log("\nTodo not found\n");
+    }
+    console.log(`\n${todo.value}\n`);
   };
 
   private handleMenuOption = async (option: string) => {
@@ -43,6 +53,8 @@ export class TodoListMenuController {
         return this.handleCreateTodo();
       case "2":
         return this.handleReadAllTodos();
+      case "3":
+        return this.handleReadTodoById();
       default:
         return;
     }
