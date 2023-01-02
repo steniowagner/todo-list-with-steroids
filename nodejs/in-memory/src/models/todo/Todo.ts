@@ -6,12 +6,14 @@ import { Priority } from "./Priority";
 export class Todo {
   private readonly _id: string;
   private _isFinished: boolean;
+  private _isFlagged: boolean;
 
   private constructor(
     private _description: Description,
     private _priority: Priority
   ) {
     this._isFinished = false;
+    this._isFlagged = false;
     this._id = uuid();
   }
 
@@ -39,12 +41,24 @@ export class Todo {
     return this._isFinished;
   }
 
+  get isFlagged() {
+    return this._isFlagged;
+  }
+
   public finish() {
     this._isFinished = true;
   }
 
   public unfinish() {
     this._isFinished = false;
+  }
+
+  public flag() {
+    this._isFlagged = true;
+  }
+
+  public unflag() {
+    this._isFlagged = false;
   }
 
   public toString() {

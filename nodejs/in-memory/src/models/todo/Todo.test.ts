@@ -24,6 +24,7 @@ describe("Todo", () => {
       expect(sut.description).toEqual(validDescription);
       expect(sut.isFinished).toEqual(false);
       expect(sut.priority).toEqual(Priority.LOW);
+      expect(sut.isFlagged).toEqual(false);
     });
 
     it("should create a Todo with a custom priority", () => {
@@ -95,6 +96,24 @@ describe("Todo", () => {
       expect(sut.isFinished).toEqual(true);
       sut.unfinish();
       expect(sut.isFinished).toEqual(false);
+    });
+  });
+
+  describe("Flagging a Todo", () => {
+    it('should mark the Todo as "Flagged" when it has a flag', () => {
+      const sut = Todo.create(validDescription);
+      expect(sut.isFlagged).toEqual(false);
+      sut.flag();
+      expect(sut.isFlagged).toEqual(true);
+    });
+
+    it('should "Unflag" a "Flagged" Todo', () => {
+      const sut = Todo.create(validDescription);
+      expect(sut.isFlagged).toEqual(false);
+      sut.flag();
+      expect(sut.isFlagged).toEqual(true);
+      sut.unflag();
+      expect(sut.isFlagged).toEqual(false);
     });
   });
 });
