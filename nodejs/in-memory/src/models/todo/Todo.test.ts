@@ -1,5 +1,6 @@
 import { MAX_CHARACTERS, MIN_CHARATERS } from "./description/Description";
 import { DescriptionErrors } from "./description/Description.errors";
+import { Priority } from "./Priority";
 import { Todo } from "./Todo";
 
 const invalidDescriptionTooFewCharacters = Array(MIN_CHARATERS - 1)
@@ -22,6 +23,13 @@ describe("Todo", () => {
       expect(typeof sut.id).toEqual("string");
       expect(sut.description).toEqual(validDescription);
       expect(sut.isFinished).toEqual(false);
+      expect(sut.priority).toEqual(Priority.LOW);
+    });
+
+    it("should create a Todo with a custom priority", () => {
+      const sut = Todo.create(validDescription, Priority.HIGH);
+      expect(typeof sut.id).toEqual("string");
+      expect(sut.priority).toEqual(Priority.HIGH);
     });
 
     it('should not create a Todo when the "description" is invalid (too few characters)', () => {
@@ -45,6 +53,13 @@ describe("Todo", () => {
         expect(sut.description).toEqual(validDescription);
         sut.description = updatedDescription;
         expect(sut.description).toEqual(updatedDescription);
+      });
+
+      it("should edit the priority of a Todo", () => {
+        const sut = Todo.create(validDescription);
+        expect(sut.priority).toEqual(Priority.LOW);
+        sut.priority = Priority.HIGH;
+        expect(sut.priority).toEqual(Priority.HIGH);
       });
 
       it('should throw the "InvalidDescriptionError" error when the new "description" is invalid (too few characters)', () => {
