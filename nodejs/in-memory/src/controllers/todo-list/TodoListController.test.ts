@@ -86,9 +86,10 @@ describe("TodoListController", () => {
     it("should update a todo correctly when the todo exists", () => {
       const sut = new TodoListController();
       const todo = sut.create("My first todo");
-      todo.description = "My first todo updated";
-      todo.finish();
-      sut.update(todo);
+      sut.update({
+        id: todo.id,
+        description: "Description updated",
+      });
       const allTodos = sut.readAll();
       expect(allTodos).toContain(todo);
     });
