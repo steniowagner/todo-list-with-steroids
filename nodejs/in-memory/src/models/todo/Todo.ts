@@ -2,7 +2,8 @@ import { v4 as uuid } from "uuid";
 
 import { Description } from "./description/Description";
 import { Priority } from "./Priority";
-
+import { TodoDTO } from "./TodoDTO";
+import { Status } from "./Status";
 export class Todo {
   private readonly _id: string;
   private _isFinished: boolean;
@@ -10,7 +11,8 @@ export class Todo {
 
   private constructor(
     private _description: Description,
-    private _priority: Priority
+    private _priority: Priority,
+    private _status: Status
   ) {
     this._isFinished = false;
     this._isFlagged = false;
@@ -19,6 +21,14 @@ export class Todo {
 
   get id() {
     return this._id;
+  }
+
+  get status() {
+    return this._status;
+  }
+
+  set status(status: Status) {
+    this._status = status;
   }
 
   get description() {
@@ -66,7 +76,9 @@ export class Todo {
     return `id: ${this._id} - ${this._description.value} - Finished? ${isFinished} - Prior`;
   }
 
-  static create(description: string, priority = Priority.LOW) {
-    return new Todo(Description.create(description), priority);
+  static create(todo: TodoDTO) {
+    const priority = todo.priority || Priority.LOW;
+    const status = todo.status || Status.TODO;
+    return new Todo(Description.create(todo.description), priority, status);
   }
 }

@@ -3,32 +3,36 @@ import { DescriptionErrors } from "./description/Description.errors";
 import { Priority } from "./Priority";
 import { Todo } from "./Todo";
 
-const invalidDescriptionTooFewCharacters = Array(MIN_CHARATERS - 1)
-  .fill("x")
-  .join("");
-const invalidDescriptionTooManyCharacters = Array(MAX_CHARACTERS + 1)
-  .fill("x")
-  .join("");
+const invalidDescriptionTooFewCharacters = {
+  description: Array(MIN_CHARATERS - 1)
+    .fill("x")
+    .join(""),
+};
+const invalidDescriptionTooManyCharacters = {
+  description: Array(MAX_CHARACTERS + 1)
+    .fill("x")
+    .join(""),
+};
 const InvalidDescriptionError = new DescriptionErrors({
   name: "INVALID_DESCRIPTION",
   message: "Invalid description",
   cause: undefined,
 });
-const validDescription = "Some valid description";
+const validDescription = { description: "Some valid description" };
 
 describe("Todo", () => {
   describe("Creating a Todo", () => {
     it('should create a Todo correctly when the "description" is valid', () => {
       const sut = Todo.create(validDescription);
       expect(typeof sut.id).toEqual("string");
-      expect(sut.description).toEqual(validDescription);
+      expect(sut.description).toEqual(validDescription.description);
       expect(sut.isFinished).toEqual(false);
       expect(sut.priority).toEqual(Priority.LOW);
       expect(sut.isFlagged).toEqual(false);
     });
 
     it("should create a Todo with a custom priority", () => {
-      const sut = Todo.create(validDescription, Priority.HIGH);
+      const sut = Todo.create({ ...validDescription, priority: Priority.HIGH });
       expect(typeof sut.id).toEqual("string");
       expect(sut.priority).toEqual(Priority.HIGH);
     });
@@ -51,7 +55,7 @@ describe("Todo", () => {
       it('should edit a Todo correctly when the "description" is valid', () => {
         const updatedDescription = "Some other valid description";
         const sut = Todo.create(validDescription);
-        expect(sut.description).toEqual(validDescription);
+        expect(sut.description).toEqual(validDescription.description);
         sut.description = updatedDescription;
         expect(sut.description).toEqual(updatedDescription);
       });
@@ -65,7 +69,7 @@ describe("Todo", () => {
 
       it('should throw the "InvalidDescriptionError" error when the new "description" is invalid (too few characters)', () => {
         const sut = Todo.create(validDescription);
-        expect(sut.description).toEqual(validDescription);
+        expect(sut.description).toEqual(validDescription.description);
         expect(() => {
           Todo.create(invalidDescriptionTooFewCharacters);
         }).toThrow(InvalidDescriptionError);
@@ -73,7 +77,7 @@ describe("Todo", () => {
 
       it('should throw the "InvalidDescriptionError" error when the new "description" is invalid (too many characters)', () => {
         const sut = Todo.create(validDescription);
-        expect(sut.description).toEqual(validDescription);
+        expect(sut.description).toEqual(validDescription.description);
         expect(() => {
           Todo.create(invalidDescriptionTooManyCharacters);
         }).toThrow(InvalidDescriptionError);

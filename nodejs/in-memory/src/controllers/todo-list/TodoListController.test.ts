@@ -71,7 +71,7 @@ describe("TodoListController", () => {
   describe("Updating a todo", () => {
     it(`should throw the UpdateUnexistentTodo error when try to update a todo that doesn't exist`, () => {
       const sut = new TodoListController();
-      const todo = Todo.create("My first todo");
+      const todo = Todo.create({ description: "My first todo" });
       expect(() => {
         sut.update(todo);
       }).toThrow(
