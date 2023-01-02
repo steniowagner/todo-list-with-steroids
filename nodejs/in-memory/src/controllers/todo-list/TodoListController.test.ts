@@ -1,6 +1,6 @@
 import { TodoListError } from "../../models/todo-list/TodoList.errors";
 import { TodoListController } from "./TodoListController";
-import { Todo } from "../../models/Todo";
+import { Todo } from "../../models/todo/Todo";
 
 const generateRandomNumber = (max: number = 10, min: number = 1) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -71,7 +71,7 @@ describe("TodoListController", () => {
   describe("Updating a todo", () => {
     it(`should throw the UpdateUnexistentTodo error when try to update a todo that doesn't exist`, () => {
       const sut = new TodoListController();
-      const todo = new Todo("My first todo");
+      const todo = Todo.create("My first todo");
       expect(() => {
         sut.update(todo);
       }).toThrow(

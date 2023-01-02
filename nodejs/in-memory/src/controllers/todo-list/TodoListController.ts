@@ -1,6 +1,6 @@
 import { TodoListModel } from "../../models/todo-list/TodoListModel";
 import { TodoListError } from "../../models/todo-list/TodoList.errors";
-import { Todo } from "../../models/Todo";
+import { Todo } from "../../models/todo/Todo";
 
 type UpdateTodoParams = {
   id: string;
@@ -18,7 +18,7 @@ export class TodoListController {
     this.todoList.readAll().find((todo) => todo.description === description);
 
   create = (description: string) => {
-    const todo = new Todo(description);
+    const todo = Todo.create(description);
     const isTodoAlredayExists = this.checkTodoAlreadyExists(todo.description);
     if (isTodoAlredayExists) {
       throw new TodoListError({
@@ -64,8 +64,10 @@ export class TodoListController {
     if (params.description) {
       this.checkUpdatingToExistentDescription(params.description);
     }
+    if (params.isFinished) {
+      todo.finish();
+    }
     todo.description = params.description || todo.description;
-    todo.isFinished = params.isFinished || todo.isFinished;
     return this.todoList.update(todo);
   };
 

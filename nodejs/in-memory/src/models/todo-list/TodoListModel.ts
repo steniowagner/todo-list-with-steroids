@@ -1,4 +1,4 @@
-import { Todo } from "../Todo";
+import { Todo } from "../todo/Todo";
 
 export class TodoListModel {
   public todos: Todo[];
