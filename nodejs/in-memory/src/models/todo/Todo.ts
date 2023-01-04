@@ -4,6 +4,8 @@ import { Description } from "./description/Description";
 import { Priority } from "./Priority";
 import { TodoDTO } from "./TodoDTO";
 import { Status } from "./Status";
+import { ParseTodoToString } from "./utils/parse-todo-to-string/ParseTodoToString";
+
 export class Todo {
   private readonly _id: string;
   private _isFinished: boolean;
@@ -72,8 +74,13 @@ export class Todo {
   }
 
   public toString() {
-    const isFinished = this._isFinished ? "Yes" : "No";
-    return `id: ${this._id} - ${this._description.value} - Finished? ${isFinished} - Prior`;
+    return ParseTodoToString.parse({
+      isFinished: this.isFinished,
+      id: this.id,
+      description: this.description,
+      priority: this.priority,
+      status: this.status,
+    });
   }
 
   static create(todo: TodoDTO) {
