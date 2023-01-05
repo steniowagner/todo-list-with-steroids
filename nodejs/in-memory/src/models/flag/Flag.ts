@@ -1,4 +1,4 @@
-import { FlagErrors } from "./Flag.error";
+import { FlagErrors } from "./Flag.errors";
 
 export const MAX_CHARACTERS = 255;
 export const MIN_CHARATERS = 2;

@@ -1,15 +1,23 @@
-import { MAX_CHARACTERS, MIN_CHARATERS } from "./description/Description";
+import {
+  MAX_CHARACTERS as DESCRIPTION_MAX_CHARACTERS,
+  MIN_CHARATERS as DESCRIPTION_MIN_CHARATERS,
+} from "./description/Description";
+import {
+  MAX_CHARACTERS as FLAG_MAX_CHARACTERS,
+  MIN_CHARATERS as FLAG_MIN_CHARATERS,
+} from "../flag/Flag";
 import { DescriptionErrors } from "./description/Description.errors";
+import { FlagErrors } from "../flag/Flag.errors";
 import { Priority } from "./Priority";
 import { Todo } from "./Todo";
 
 const invalidDescriptionTooFewCharacters = {
-  description: Array(MIN_CHARATERS - 1)
+  description: Array(DESCRIPTION_MIN_CHARATERS - 1)
     .fill("x")
     .join(""),
 };
 const invalidDescriptionTooManyCharacters = {
-  description: Array(MAX_CHARACTERS + 1)
+  description: Array(DESCRIPTION_MAX_CHARACTERS + 1)
     .fill("x")
     .join(""),
 };
@@ -20,6 +28,19 @@ const InvalidDescriptionError = new DescriptionErrors({
 });
 const validDescription = { description: "Some valid description" };
 
+const invalidFlagTooFewCharacters = Array(FLAG_MIN_CHARATERS - 1)
+  .fill("x")
+  .join("");
+const invalidFlagTooManyCharacters = Array(FLAG_MAX_CHARACTERS + 1)
+  .fill("x")
+  .join("");
+const InvalidFlagError = new FlagErrors({
+  name: "INVALID_FLAG",
+  message: "Invalid Flag",
+  cause: undefined,
+});
+const validFlag = "Some valida Flag";
+
 describe("Todo", () => {
   describe("Creating a Todo", () => {
     it('should create a Todo correctly when the "description" is valid', () => {
@@ -29,6 +50,8 @@ describe("Todo", () => {
       expect(sut.isFinished).toEqual(false);
       expect(sut.priority).toEqual(Priority.LOW);
       expect(sut.isFlagged).toEqual(false);
+      expect(sut.isFlagged).toEqual(false);
+      expect(sut.flag).toBeUndefined();
     });
 
     it("should create a Todo with a custom priority", () => {
@@ -37,13 +60,13 @@ describe("Todo", () => {
       expect(sut.priority).toEqual(Priority.HIGH);
     });
 
-    it('should not create a Todo when the "description" is invalid (too few characters)', () => {
+    it(`should not create a Todo when the "description" has less than ${DESCRIPTION_MIN_CHARATERS} characters`, () => {
       expect(() => {
         Todo.create(invalidDescriptionTooFewCharacters);
       }).toThrow(InvalidDescriptionError);
     });
 
-    it('should not create a Todo when the "description" is invalid (too many characters)', () => {
+    it(`should not create a Todo when the "description" has more than ${DESCRIPTION_MAX_CHARACTERS} characters`, () => {
       expect(() => {
         Todo.create(invalidDescriptionTooManyCharacters);
       }).toThrow(InvalidDescriptionError);
@@ -104,20 +127,38 @@ describe("Todo", () => {
   });
 
   describe("Flagging a Todo", () => {
-    it('should mark the Todo as "Flagged" when it has a flag', () => {
+    it('should mark the Todo as "Flagged" when it has a valid flag', () => {
       const sut = Todo.create(validDescription);
       expect(sut.isFlagged).toEqual(false);
-      sut.flag();
+      sut.addFlag(validFlag);
       expect(sut.isFlagged).toEqual(true);
     });
 
-    it('should "Unflag" a "Flagged" Todo', () => {
+    it('should "Remove" a "Flag" from the Todo', () => {
       const sut = Todo.create(validDescription);
       expect(sut.isFlagged).toEqual(false);
-      sut.flag();
+      sut.addFlag(validFlag);
       expect(sut.isFlagged).toEqual(true);
-      sut.unflag();
+      sut.removeFlag();
       expect(sut.isFlagged).toEqual(false);
+    });
+
+    describe('When the "Flag-reason" is invalid', () => {
+      it(`should not "Flag" a Todo when the "Flag-reason" has less than ${FLAG_MIN_CHARATERS} characters`, () => {
+        const sut = Todo.create(validDescription);
+        expect(sut.isFlagged).toEqual(false);
+        expect(() => {
+          sut.addFlag(invalidFlagTooFewCharacters);
+        }).toThrow(InvalidFlagError);
+      });
+
+      it(`should not "Flag" a Todo when the "Flag-reason" has more than ${FLAG_MAX_CHARACTERS} characters`, () => {
+        const sut = Todo.create(validDescription);
+        expect(sut.isFlagged).toEqual(false);
+        expect(() => {
+          sut.addFlag(invalidFlagTooManyCharacters);
+        }).toThrow(InvalidFlagError);
+      });
     });
   });
 });
