@@ -84,6 +84,7 @@ export class Todo {
       description: this.description,
       priority: this.priority,
       status: this.status,
+      flag: this._flag?.value,
     });
   }
 
