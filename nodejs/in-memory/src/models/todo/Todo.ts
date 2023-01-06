@@ -6,8 +6,10 @@ import { Priority } from "./Priority";
 import { TodoDTO } from "./TodoDTO";
 import { Status } from "./Status";
 import { Flag } from "../flag/Flag";
+import { ChecklistItem } from "./checklist-item/ChecklistItem";
 
 export class Todo {
+  private _checklistItems: ChecklistItem[];
   private readonly _id: string;
   private _isFinished: boolean;
   private _flag?: Flag;
@@ -19,6 +21,7 @@ export class Todo {
   ) {
     this._isFinished = false;
     this._id = uuid();
+    this._checklistItems = [];
   }
 
   get id() {
@@ -59,6 +62,18 @@ export class Todo {
 
   get flag() {
     return this._flag?.value;
+  }
+
+  get checklistItems() {
+    return this._checklistItems;
+  }
+
+  public addChecklistItems(checklistItemsDescriptions: string[]) {
+    const newChecklistItems = checklistItemsDescriptions.map(
+      (checklistItemsDescription) =>
+        ChecklistItem.create(checklistItemsDescription)
+    );
+    this._checklistItems = [...newChecklistItems, ...this._checklistItems];
   }
 
   public finish() {

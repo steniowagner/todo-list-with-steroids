@@ -20,7 +20,7 @@ describe("Todo/ParseTodoToString", () => {
           isFinished: true,
         })
       ).toEqual(
-        `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? Yes\n- Priority: Unknown\n- Status: Unknown\n`
+        `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? Yes\n- Priority: Unknown\n- Status: Unknown\n- Flag: -`
       );
     });
 
@@ -31,7 +31,7 @@ describe("Todo/ParseTodoToString", () => {
           isFinished: false,
         })
       ).toEqual(
-        `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: Unknown\n- Status: Unknown\n`
+        `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: Unknown\n- Status: Unknown\n- Flag: -`
       );
     });
   });
@@ -46,7 +46,7 @@ describe("Todo/ParseTodoToString", () => {
             priority,
           })
         ).toEqual(
-          `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: ${prioritiesValues[index]}\n- Status: Unknown\n`
+          `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: ${prioritiesValues[index]}\n- Status: Unknown\n- Flag: -`
         );
       });
     });
@@ -62,7 +62,7 @@ describe("Todo/ParseTodoToString", () => {
             status,
           })
         ).toEqual(
-          `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: Unknown\n- Status: ${statusesValues[index]}\n`
+          `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: Unknown\n- Status: ${statusesValues[index]}\n- Flag: -`
         );
       });
     });
@@ -80,10 +80,25 @@ describe("Todo/ParseTodoToString", () => {
               priority: priorities[j],
             })
           ).toEqual(
-            `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: ${prioritiesValues[j]}\n- Status: ${statusesValues[i]}\n`
+            `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Priority: ${prioritiesValues[j]}\n- Status: ${statusesValues[i]}\n- Flag: -`
           );
         }
       }
+    });
+  });
+
+  describe('When the "Todo" is "Flagged"', () => {
+    it('should show the "Flag" correctly', () => {
+      const flag = "SOME_FLAG";
+      expect(
+        ParseTodoToString.parse({
+          ...baseParams,
+          flag,
+          isFinished: true,
+        })
+      ).toEqual(
+        `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? Yes\n- Priority: Unknown\n- Status: Unknown\n- Flag: ${flag}`
+      );
     });
   });
 });
