@@ -32,7 +32,7 @@ export class Todo {
     return this._status;
   }
 
-  set status(status: Status) {
+  public setStatus(status: Status) {
     this._status = status;
   }
 
