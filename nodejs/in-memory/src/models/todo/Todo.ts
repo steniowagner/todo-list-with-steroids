@@ -13,6 +13,7 @@ export class Todo {
   private readonly _id: string;
   private _isFinished: boolean;
   private _flag?: Flag;
+  private startedAt?: number;
 
   private constructor(
     private _description: Description,
@@ -32,7 +33,8 @@ export class Todo {
     return this._status;
   }
 
-  public setStatus(status: Status) {
+  set status(status: Status) {
+    this.handleSetStartedDate(status);
     this._status = status;
   }
 
@@ -68,6 +70,12 @@ export class Todo {
     return this._checklistItems;
   }
 
+  private handleSetStartedDate(status: Status) {
+    if (status === Status.DOING) {
+      this.startedAt = Date.now();
+    }
+  }
+
   public addChecklistItems(checklistItemsDescriptions: string[]) {
     const newChecklistItems = checklistItemsDescriptions.map(
       (checklistItemsDescription) =>
@@ -100,6 +108,7 @@ export class Todo {
       priority: this.priority,
       status: this.status,
       flag: this._flag?.value,
+      startedAt: this.startedAt,
     });
   }
 
