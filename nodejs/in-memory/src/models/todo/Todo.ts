@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import { DateTime } from "luxon";
 
 import { ParseTodoToString } from "./utils/parse-todo-to-string/ParseTodoToString";
 import { Description } from "./description/Description";
@@ -9,17 +10,30 @@ import { TodoQueries } from "./queries/TodoQueries";
 import { TodoCommandHandler } from "./commands/TodoCommandHandler";
 import { TodoQueryHandler } from "./queries/TodoQueryHandler";
 
+interface TodoConstructorParams {
+  description: Description;
+  status: Status;
+  now: DateTime;
+}
+
+interface TodoCreateParams {
+  description: string;
+  status?: Status;
+  now: DateTime;
+}
+
 export class Todo {
   private readonly commands: TodoCommandHandler;
   private readonly queries: TodoQueryHandler;
   private data: TodoData;
 
-  private constructor(description: Description, status: Status) {
+  private constructor(params: TodoConstructorParams) {
     this.data = {
-      description,
+      description: params.description,
       id: uuid(),
       isFinished: false,
-      status: status,
+      status: params.status,
+      createdAt: DateTime.now().toString(),
     };
     this.queries = new TodoQueries(this.data);
     this.commands = new TodoCommands(this.data);
@@ -49,6 +63,10 @@ export class Todo {
     this.commands.setStatus(status);
   }
 
+  get createdAt() {
+    return this.queries.getCreatedAt();
+  }
+
   finish() {
     this.commands.finish();
   }
@@ -61,7 +79,11 @@ export class Todo {
     return ParseTodoToString.parse(this.data);
   }
 
-  static create(description: string, status: Status = Status.TODO) {
-    return new Todo(Description.create(description), status);
+  static create(params: TodoCreateParams) {
+    return new Todo({
+      description: Description.create(params.description),
+      status: params.status || Status.TODO,
+      now: params.now,
+    });
   }
 }

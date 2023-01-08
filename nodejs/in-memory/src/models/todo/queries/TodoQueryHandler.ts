@@ -12,4 +12,5 @@ export abstract class TodoQueryHandler {
   abstract getStatus(): Status;
   abstract getDescription(): string;
   abstract getIsFinished(): boolean;
+  abstract getCreatedAt(): string;
 }

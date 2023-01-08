@@ -1,7 +1,8 @@
+import { DateTime } from "luxon";
+
 import { TodoQueryHandler } from "./TodoQueryHandler";
 import { Status } from "../Status";
 import { TodoData } from "../TodoData";
-
 export class TodoQueries extends TodoQueryHandler {
   constructor(todo: TodoData) {
     super(todo);
@@ -21,5 +22,9 @@ export class TodoQueries extends TodoQueryHandler {
 
   getIsFinished(): boolean {
     return this.todo.isFinished;
+  }
+
+  getCreatedAt(): string {
+    return this.todo.createdAt;
   }
 }

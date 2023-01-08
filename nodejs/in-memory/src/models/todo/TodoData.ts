@@ -6,4 +6,5 @@ export interface TodoData {
   id: string;
   isFinished: boolean;
   status: Status;
+  createdAt: string;
 }
