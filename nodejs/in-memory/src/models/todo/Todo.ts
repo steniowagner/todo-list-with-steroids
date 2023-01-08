@@ -2,72 +2,66 @@ import { v4 as uuid } from "uuid";
 
 import { ParseTodoToString } from "./utils/parse-todo-to-string/ParseTodoToString";
 import { Description } from "./description/Description";
-import { TodoDTO } from "./TodoDTO";
+import { TodoData } from "./TodoData";
 import { Status } from "./Status";
+import { TodoCommands } from "./commands/TodoCommands";
+import { TodoQueries } from "./queries/TodoQueries";
+import { TodoCommandHandler } from "./commands/TodoCommandHandler";
+import { TodoQueryHandler } from "./queries/TodoQueryHandler";
 
 export class Todo {
-  private readonly _id: string;
-  private _isFinished: boolean;
-  private startedAt?: number;
+  private readonly commands: TodoCommandHandler;
+  private readonly queries: TodoQueryHandler;
+  private data: TodoData;
 
-  private constructor(
-    private _description: Description,
-    private _status: Status
-  ) {
-    this._isFinished = false;
-    this._id = uuid();
+  private constructor(description: Description, status: Status) {
+    this.data = {
+      description,
+      id: uuid(),
+      isFinished: false,
+      status: status,
+    };
+    this.queries = new TodoQueries(this.data);
+    this.commands = new TodoCommands(this.data);
   }
 
   get id() {
-    return this._id;
-  }
-
-  get status() {
-    return this._status;
-  }
-
-  set status(status: Status) {
-    this.handleSetStartedDate(status);
-    this._status = status;
+    return this.queries.getId();
   }
 
   get description() {
-    return this._description.value;
+    return this.queries.getDescription();
   }
 
   set description(description: string) {
-    this._description.value = description;
+    this.commands.setDescription(description);
   }
 
   get isFinished() {
-    return this._isFinished;
+    return this.queries.getIsFinished();
   }
 
-  private handleSetStartedDate(status: Status) {
-    if (status === Status.DOING) {
-      this.startedAt = Date.now();
-    }
+  get status() {
+    return this.queries.getStatus();
   }
 
-  public finish() {
-    this._isFinished = true;
+  set status(status: Status) {
+    this.commands.setStatus(status);
   }
 
-  public unfinish() {
-    this._isFinished = false;
+  finish() {
+    this.commands.finish();
   }
 
-  public toString() {
-    return ParseTodoToString.parse({
-      isFinished: this.isFinished,
-      id: this.id,
-      description: this.description,
-      status: this.status,
-    });
+  unfinish() {
+    this.commands.unfinish();
   }
 
-  static create(todo: TodoDTO) {
-    const status = todo.status || Status.TODO;
-    return new Todo(Description.create(todo.description), status);
+  toString() {
+    return ParseTodoToString.parse(this.data);
+  }
+
+  static create(description: string, status: Status = Status.TODO) {
+    return new Todo(Description.create(description), status);
   }
 }

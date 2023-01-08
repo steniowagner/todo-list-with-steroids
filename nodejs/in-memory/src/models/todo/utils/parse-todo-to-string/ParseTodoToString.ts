@@ -1,10 +1,5 @@
 import { Status } from "../../Status";
-import { TodoDTO } from "../../TodoDTO";
-
-type ParseTodoToStringParams = TodoDTO & {
-  isFinished: boolean;
-  id: string;
-};
+import { TodoData } from "../../TodoData";
 
 export class ParseTodoToString {
   private static parseIsFinished(isFinished: boolean) {
@@ -24,7 +19,7 @@ export class ParseTodoToString {
     }
   }
 
-  static parse(params: ParseTodoToStringParams) {
+  static parse(params: TodoData) {
     return `- id: ${params.id}\n- Description: ${
       params.description
     }\n- Finished? ${this.parseIsFinished(
