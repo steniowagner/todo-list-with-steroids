@@ -8,18 +8,18 @@ export class TodoQueries extends TodoQueryHandler {
   }
 
   getId(): string {
-    return this._todo.id;
+    return this.todo.id;
   }
 
   getStatus(): Status {
-    return this._todo.status;
+    return this.todo.status;
   }
 
   getDescription(): string {
-    return this._todo.description.value;
+    return this.todo.description.value;
   }
 
   getIsFinished(): boolean {
-    return this._todo.isFinished;
+    return this.todo.isFinished;
   }
 }
