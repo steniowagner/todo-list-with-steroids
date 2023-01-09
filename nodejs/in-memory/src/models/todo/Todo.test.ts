@@ -101,7 +101,14 @@ describe("Todo", () => {
     });
   });
 
-  describe('Changing the Todo "Status"', () => {});
+  describe('Changing the "Status"', () => {
+    it('should change the "status" to "STARTED" when the "Todo" is "started"', () => {
+      const sut = makeValidTodo();
+      expect(sut.status).toEqual(Status.TODO);
+      sut.start();
+      expect(sut.status).toEqual(Status.DOING);
+    });
+  });
 
   describe("Finishing a Todo", () => {
     it('should mark a Todo as "Finished" when it is finished', () => {
