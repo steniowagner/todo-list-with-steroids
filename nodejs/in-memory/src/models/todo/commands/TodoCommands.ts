@@ -16,8 +16,8 @@ export class TodoCommands extends TodoCommandHandler {
     this.todo.isFinished = false;
   }
 
-  setStatus(status: Status): void {
-    this.todo.status = status;
+  start(): void {
+    this.todo.status = Status.DOING;
   }
 
   setDescription(description: string): void {

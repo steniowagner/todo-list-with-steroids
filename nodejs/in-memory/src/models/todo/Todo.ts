@@ -51,31 +51,31 @@ export class Todo {
     this.commands.setDescription(description);
   }
 
-  get isFinished() {
-    return this.queries.getIsFinished();
-  }
-
   get status() {
     return this.queries.getStatus();
-  }
-
-  set status(status: Status) {
-    this.commands.setStatus(status);
   }
 
   get createdAt() {
     return this.queries.getCreatedAt();
   }
 
-  finish() {
+  get isFinished() {
+    return this.queries.getIsFinished();
+  }
+
+  finish(): void {
     this.commands.finish();
   }
 
-  unfinish() {
+  unfinish(): void {
     this.commands.unfinish();
   }
 
-  toString() {
+  start(): void {
+    this.commands.start();
+  }
+
+  toString(): string {
     return ParseTodoToString.parse(this.data);
   }
 

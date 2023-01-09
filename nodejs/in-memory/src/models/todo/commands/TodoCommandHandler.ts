@@ -5,7 +5,7 @@ export abstract class TodoCommandHandler {
   constructor(protected todo: TodoData) {}
 
   abstract setDescription(description: string): void;
-  abstract setStatus(status: Status): void;
+  abstract start(): void;
   abstract finish(): void;
   abstract unfinish(): void;
 }
