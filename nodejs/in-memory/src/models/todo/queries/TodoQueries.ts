@@ -27,4 +27,11 @@ export class TodoQueries extends TodoQueryHandler {
   getCreatedAt(): string {
     return this.todo.createdAt;
   }
+
+  getStartedAt(): string {
+    if (!this.todo.startedAt) {
+      return "-";
+    }
+    return this.todo.startedAt;
+  }
 }
