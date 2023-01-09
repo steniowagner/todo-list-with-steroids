@@ -7,4 +7,5 @@ export interface TodoData {
   isFinished: boolean;
   status: Status;
   createdAt: string;
+  startedAt?: string;
 }
