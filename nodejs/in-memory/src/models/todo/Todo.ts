@@ -67,10 +67,6 @@ export class Todo {
     this.commands.finish();
   }
 
-  unfinish(): void {
-    this.commands.unfinish();
-  }
-
   start(): void {
     this.commands.start();
   }

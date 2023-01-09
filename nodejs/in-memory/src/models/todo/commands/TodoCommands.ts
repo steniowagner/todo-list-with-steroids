@@ -12,10 +12,6 @@ export class TodoCommands extends TodoCommandHandler {
     this.todo.isFinished = true;
   }
 
-  unfinish(): void {
-    this.todo.isFinished = false;
-  }
-
   start(): void {
     this.todo.status = Status.DOING;
   }

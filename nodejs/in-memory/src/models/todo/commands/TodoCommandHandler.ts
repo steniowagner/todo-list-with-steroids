@@ -7,5 +7,4 @@ export abstract class TodoCommandHandler {
   abstract setDescription(description: string): void;
   abstract start(): void;
   abstract finish(): void;
-  abstract unfinish(): void;
 }

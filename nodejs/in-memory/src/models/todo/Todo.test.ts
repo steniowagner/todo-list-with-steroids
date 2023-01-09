@@ -117,14 +117,5 @@ describe("Todo", () => {
       sut.finish();
       expect(sut.isFinished).toEqual(true);
     });
-
-    it('should "Unfinish" a "Finished" Todo', () => {
-      const sut = makeValidTodo();
-      expect(sut.isFinished).toEqual(false);
-      sut.finish();
-      expect(sut.isFinished).toEqual(true);
-      sut.unfinish();
-      expect(sut.isFinished).toEqual(false);
-    });
   });
 });
