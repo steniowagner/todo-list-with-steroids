@@ -31,7 +31,6 @@ export class Todo {
     this.data = {
       description: params.description,
       id: uuid(),
-      isFinished: false,
       status: params.status,
       createdAt: DateTime.now().toString(),
     };
@@ -57,10 +56,6 @@ export class Todo {
 
   get createdAt() {
     return this.queries.getCreatedAt();
-  }
-
-  get isFinished() {
-    return this.queries.getIsFinished();
   }
 
   finish(): void {

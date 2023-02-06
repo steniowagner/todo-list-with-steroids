@@ -20,10 +20,6 @@ export class TodoQueries extends TodoQueryHandler {
     return this.todo.description.value;
   }
 
-  getIsFinished(): boolean {
-    return this.todo.isFinished;
-  }
-
   getCreatedAt(): string {
     return this.todo.createdAt;
   }

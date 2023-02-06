@@ -11,23 +11,13 @@ const baseParams = {
 describe("Todo/ParseTodoToString", () => {
   describe("When only the default params are presented", () => {
     it('should parse correctly when "isFinished" is "true"', () => {
-      expect(
-        ParseTodoToString.parse({
-          ...baseParams,
-          isFinished: true,
-        })
-      ).toEqual(
+      expect(ParseTodoToString.parse(baseParams)).toEqual(
         `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? Yes\n- Status: Unknown`
       );
     });
 
     it('should parse correctly when "isFinished" is "false"', () => {
-      expect(
-        ParseTodoToString.parse({
-          ...baseParams,
-          isFinished: false,
-        })
-      ).toEqual(
+      expect(ParseTodoToString.parse(baseParams)).toEqual(
         `- id: ${baseParams.id}\n- Description: ${baseParams.description}\n- Finished? No\n- Status: Unknown`
       );
     });
@@ -39,7 +29,6 @@ describe("Todo/ParseTodoToString", () => {
         expect(
           ParseTodoToString.parse({
             ...baseParams,
-            isFinished: false,
             status,
           })
         ).toEqual(

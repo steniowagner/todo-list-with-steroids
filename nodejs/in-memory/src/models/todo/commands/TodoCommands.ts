@@ -9,7 +9,7 @@ export class TodoCommands extends TodoCommandHandler {
   }
 
   finish(): void {
-    this.todo.isFinished = true;
+    this.todo.status = Status.DONE;
   }
 
   start(): void {
